@@ -1,5 +1,6 @@
+from typing import Any, Dict, List
+
 import pytest
-from typing import List, Dict, Any
 
 
 @pytest.fixture
