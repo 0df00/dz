@@ -25,7 +25,10 @@ def get_date(date_string: str) -> str:
     Преобразует строку даты '2024-03-11T02:26:18.671407' в 'ДД.ММ.ГГГГ'
     """
     from datetime import datetime
-    date_obj = datetime.fromisoformat(
-        date_string.replace('Z', '+00:00')
-    ) if date_string.endswith('Z') else datetime.fromisoformat(date_string)
+
+    date_obj = (
+        datetime.fromisoformat(date_string.replace("Z", "+00:00"))
+        if date_string.endswith("Z")
+        else datetime.fromisoformat(date_string)
+    )
     return date_obj.strftime("%d.%m.%Y")
