@@ -1,6 +1,8 @@
+from typing import Any, Dict, List
+
 import pytest
+
 from src.processing import filter_by_state, sort_by_date
-from typing import List, Dict, Any
 
 
 def test_filter_by_state_default(operations: List[Dict[str, Any]]) -> None:
