@@ -1,3 +1,6 @@
+from typing import Any
+
+from src.decorators import log
 from src.generators import filter_by_currency  # Импортируем новые функции
 from src.generators import card_number_generator, transaction_descriptions
 from src.masks import get_mask_account, get_mask_card_number
@@ -126,3 +129,49 @@ if __name__ == "__main__":
         print(card_number)
 
     print("\n--- Конец generators ---")
+
+    print("\n--- Тест декоратора @log ---")
+
+    @log()
+    def add_numbers(a: int, b: int) -> int:
+        """Функция сложения"""
+        return a + b
+
+    print("\nВызов add_numbers(5, 3):")
+    result_add = add_numbers(5, 3)
+    print(f"Результат: {result_add}")
+
+    @log()
+    def divide_numbers(x: float, y: float) -> float:
+        """Функция деления, может вызвать ошибку"""
+        return x / y
+
+    print("\nВызов divide_numbers(10, 0):")
+    try:
+        result_div = divide_numbers(10, 0)
+        print(f"Результат: {result_div}")
+    except ZeroDivisionError as e:
+        print(f"Исключение: {e}")
+
+    @log(filename="ok_log.txt")
+    def multiply_numbers(p: int, q: int) -> int:
+        """Функция умножения"""
+        return p * q
+
+    print("\nВызов multiply_numbers(4, 7) (результат в ok_log.txt):")
+    result_mul = multiply_numbers(4, 7)
+    print(f"Результат: {result_mul}")
+
+    @log(filename="error_log.txt")
+    def get_item_from_list(lst: list, index: int) -> Any:
+        """Функция получения элемента списка по индексу, может вызвать ошибку"""
+        return lst[index]
+
+    print("\nВызов get_item_from_list([1, 2], 5) (ошибка в error_log.txt):")
+    try:
+        result_item = get_item_from_list([1, 2], 5)
+        print(f"Результат: {result_item}")
+    except IndexError as e:
+        print(f"Иссключение: {e}")
+
+    print("\n--- Конец @log ---")
