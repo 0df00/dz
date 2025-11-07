@@ -1,4 +1,5 @@
-from typing import Any, Dict, List
+import tempfile
+from typing import Any, Dict, Generator, List
 
 import pytest
 
@@ -95,3 +96,15 @@ def transactions() -> List[Dict[str, Any]]:
             "to": "Счет 14211924144426031657",
         },
     ]
+
+
+@pytest.fixture
+def temp_log_file() -> Generator[str, None, None]:
+    """Фикстура для временного файла лога"""
+    with tempfile.NamedTemporaryFile(mode="w", delete=False, encoding="utf-8") as f:
+        temp_filename = f.name
+    yield temp_filename
+    import os
+
+    if os.path.exists(temp_filename):
+        os.unlink(temp_filename)
